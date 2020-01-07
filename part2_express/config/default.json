@@ -1,3 +1,7 @@
 {
-  "DEFAULT_PORT": 4300
+  "DEFAULT_PORT": 4300,
+  "APP_DEBUG": {
+    "SERVER": "APP:SERVER",
+    "API": "APP:API"
+  }
 }

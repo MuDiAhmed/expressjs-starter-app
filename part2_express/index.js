@@ -1,5 +1,5 @@
 const app = require("./server");
-const logger = require("../part1/logger");
 const env = require("./env")();
+const debug = require("debug")(env.server_debug);
 
-app.listen(env.port, () => logger(`listening to port ${env.port}`));
+app.listen(env.port, () => debug(`listening to port ${env.port}`));

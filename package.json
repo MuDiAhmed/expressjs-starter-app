@@ -5,12 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "export PORT=4320 && ./node_modules/.bin/nodemon part2_express"
+    "start": "export NODE_CONFIG_DIR=part2_express/config && export PORT=4320 && ./node_modules/.bin/nodemon part2_express"
   },
   "author": "Mohamed Youssef",
   "license": "ISC",
   "dependencies": {
     "@hapi/joi": "^16.1.8",
+    "config": "^3.2.4",
     "express": "^4.17.1",
     "helmet": "^3.21.2",
     "lodash": "^4.17.15",

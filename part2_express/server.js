@@ -2,7 +2,6 @@ const express = require("express");
 const app = express();
 const api = require("./api");
 const middlewares = require("./middlewares");
-const env = require("./env")(app);
 
 app.use(middlewares());
 

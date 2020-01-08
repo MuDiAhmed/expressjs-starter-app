@@ -4,7 +4,8 @@ const envObject = {
   port: config.has("PORT") ? config.get("PORT") : config.get("DEFAULT_PORT"),
   env: config.util.getEnv("NODE_ENV"),
   server_debug: config.get("APP_DEBUG.SERVER"),
-  api_debug: config.get("APP_DEBUG.API")
+  api_debug: config.get("APP_DEBUG.API"),
+  log: config.get("LOG")
 };
 
 const env = () => {

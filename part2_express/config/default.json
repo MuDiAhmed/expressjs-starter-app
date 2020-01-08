@@ -3,5 +3,10 @@
   "APP_DEBUG": {
     "SERVER": "APP:SERVER",
     "API": "APP:API"
+  },
+  "LOG": {
+    "DIR": "log",
+    "ALL": "access.log",
+    "ERROR": "error.log"
   }
 }

@@ -10,4 +10,9 @@ const envObject = {
 const env = () => {
   return { ...envObject };
 };
-module.exports = env;
+
+const setAppEnv = app => {
+  app.set("env", envObject.env);
+};
+module.exports.getEnv = env;
+module.exports.setAppEnv = setAppEnv;

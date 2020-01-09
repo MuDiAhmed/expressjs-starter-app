@@ -1,0 +1,13 @@
+{
+  "DB": {
+    "HOST": "localhost",
+    "PORT": "27017",
+    "NAME": "mosh_udemy",
+    "AUTO_INDEX": true,
+    "AUTO_CREATE": true,
+    "NEW_URL_PARSER": true,
+    "UNIFIED_TOPOLOGY": true,
+    "CREATE_INDEX": true,
+    "BUFFER_COMMANDS": true
+  }
+}

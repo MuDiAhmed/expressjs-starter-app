@@ -1,0 +1,6 @@
+{
+  "DB": {
+    "AUTO_INDEX": false,
+    "AUTO_CREATE": false
+  }
+}

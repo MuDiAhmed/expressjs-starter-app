@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "NODE_CONFIG_DIR=part2_express/config PORT=4320 DEBUG=APP:*,express:* nodemon part2_express",
-    "prod": "NODE_CONFIG_DIR=part2_express/config NODE_ENV=production nodemon part2_express",
-    "start": "npm run dev"
+    "dev_express": "NODE_CONFIG_DIR=part2_express/config PORT=4320 DEBUG=APP:*,express:* nodemon part2_express",
+    "prod_express": "NODE_CONFIG_DIR=part2_express/config NODE_ENV=production nodemon part2_express",
+    "dev_mongo": "NODE_CONFIG_DIR=part3_mongodb/config node part3_mongodb",
+    "start": "npm run dev_mongo"
   },
   "author": "Mohamed Youssef",
   "license": "ISC",
@@ -19,7 +20,7 @@
     "express-react-views": "^0.11.0",
     "helmet": "^3.21.2",
     "lodash": "^4.17.15",
-    "mongoose": "^5.8.4",
+    "mongoose": "^5.8.6",
     "morgan": "^1.9.1",
     "nodemon": "^2.0.2",
     "react": "^16.12.0",

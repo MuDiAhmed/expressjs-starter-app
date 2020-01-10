@@ -5,27 +5,52 @@ const user = require("./models/users");
 db.on("error", console.log.bind(console, "connection error: "));
 db.once("connected", () => {
   console.log("connected successfully");
-  createSample();
+  updateSample();
 });
 db.once("disconnected", () => {
   console.log("disconnected");
 });
 
-function createSample() {
+async function createSample() {
   let userModel = user.Model(db)({
-    firstName: "Mohamed",
+    // firstName: "Mohamed",
     lastName: "Youssef",
     email: "test2@test.com",
     age: 19
   });
   let postModel = post.Model(db)({
-    title: "third post",
+    // title: "third post",
     body: "this is an awesome post to read",
     auther: userModel,
     tags: ["awesome", "must read"]
   });
 
-  postModel.save();
+  try {
+    await postModel.save();
+  } catch (error) {
+    for (let key in error.errors) {
+      console.log(error.errors[key].message);
+    }
+  }
+}
+
+async function updateSample() {
+  const postBeforeUpdate = await post.Model(db).updateMany(
+    { title: /^post/i },
+    {
+      $inc: { "meta.votes": 1, "auther.age": 2 },
+      $set: { title: "post with set operator" }
+    },
+    { useFindAndModify: false, new: true }
+  );
+  const userAfterUpdate = await user.Model(db).findOneAndUpdate(
+    { fn: /^Mohamed/i },
+    {
+      $set: { fn: "Mohamed" }
+    },
+    { useFindAndModify: false, new: true }
+  );
+  console.log(userAfterUpdate);
 }
 
 async function getSample() {

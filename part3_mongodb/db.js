@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const env = require("./env").getEnv();
 
+mongoose.plugin(require("./plugins/updatedDate"));
+
 const dbConnectio = mongoose.createConnection(
   `mongodb://${env.dbConnection.host}:${env.dbConnection.port}/${env.dbConnection.name}`,
   {

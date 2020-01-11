@@ -5,10 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "dev_final": "NODE_CONFIG_DIR=final_project/configs PORT=4300 DEBUG=APP:*,express:* nodemon final_project",
     "dev_express": "NODE_CONFIG_DIR=part2_express/config PORT=4320 DEBUG=APP:*,express:* nodemon part2_express",
     "prod_express": "NODE_CONFIG_DIR=part2_express/config NODE_ENV=production nodemon part2_express",
     "dev_mongo": "NODE_CONFIG_DIR=part3_mongodb/config node part3_mongodb",
-    "start": "npm run dev_mongo"
+    "start": "npm run dev_final"
   },
   "author": "Mohamed Youssef",
   "license": "ISC",

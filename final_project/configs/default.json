@@ -1,0 +1,25 @@
+{
+  "PORT": 4000,
+  "APP_DEBUG": {
+    "SERVER": "APP:SERVER",
+    "API": "APP:API"
+  },
+  "LOG": {
+    "DIR": "log",
+    "ALL": "access.log",
+    "ERROR": "error.log"
+  },
+  "DB_MONGOOSE_CONFIG": {
+    "AUTO_INDEX": true,
+    "AUTO_CREATE": true,
+    "NEW_URL_PARSER": true,
+    "UNIFIED_TOPOLOGY": true,
+    "CREATE_INDEX": true,
+    "BUFFER_COMMANDS": true
+  },
+  "DB_CONNECTION": {
+    "HOST": "localhost",
+    "PORT": "27017",
+    "NAME": "mosh_udemy"
+  }
+}

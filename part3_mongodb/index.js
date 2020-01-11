@@ -1,6 +1,8 @@
 const db = require("./db");
 const post = require("./models/posts");
 const user = require("./models/users");
+const userRepo = require("./repositories/users");
+const postRepo = require("./repositories/posts");
 
 db.on("error", console.log.bind(console, "connection error: "));
 db.once("connected", () => {
@@ -12,21 +14,21 @@ db.once("disconnected", () => {
 });
 
 async function createSample() {
-  let userModel = user.Model(db)({
-    // firstName: "Mohamed",
+  let userDoc = await userRepo.createUser({
+    firstName: "Mohamed",
     lastName: "Youssef",
-    email: "test2@test.com",
+    email: "test6@test.com",
     age: 19
   });
-  let postModel = post.Model(db)({
-    // title: "third post",
+  let postDoc = await postRepo.createPost({
+    title: "third post",
     body: "this is an awesome post to read",
-    auther: userModel,
+    auther: userDoc,
     tags: ["awesome", "must read"]
   });
 
   try {
-    await postModel.save();
+    console.log(postDoc);
   } catch (error) {
     for (let key in error.errors) {
       console.log(error.errors[key].message);
@@ -35,22 +37,20 @@ async function createSample() {
 }
 
 async function updateSample() {
-  const postBeforeUpdate = await post.Model(db).updateMany(
+  const postBeforeUpdate = await postRepo.updatePost(
     { title: /^post/i },
     {
       $inc: { "meta.votes": 1, "auther.age": 2 },
       $set: { title: "post with set operator" }
-    },
-    { useFindAndModify: false, new: true }
+    }
   );
-  const userAfterUpdate = await user.Model(db).findOneAndUpdate(
-    { fn: /^Mohamed/i },
-    {
-      $set: { fn: "Mohamed" }
-    },
-    { useFindAndModify: false, new: true }
-  );
+  const userAfterUpdate = await userRepo
+    .updateUser()
+    .where("age")
+    .eq(19)
+    .set({ fn: "Said" });
   console.log(userAfterUpdate);
+  console.log(postBeforeUpdate);
 }
 
 async function getSample() {
@@ -59,8 +59,8 @@ async function getSample() {
 }
 
 async function getCondition() {
-  let posts = await post
-    .Model(db)
+  let posts = await postRepo
+    .getPostModel()
     .find()
     .or([{ "auther.firstName": "Mohamed" }, { "auther.fn": "Mohamed" }])
     .where("auther.age")

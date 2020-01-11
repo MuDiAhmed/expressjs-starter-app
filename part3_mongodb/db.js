@@ -3,7 +3,7 @@ const env = require("./env").getEnv();
 
 mongoose.plugin(require("./plugins/updatedDate"));
 
-const dbConnectio = mongoose.createConnection(
+const dbConnection = mongoose.createConnection(
   `mongodb://${env.dbConnection.host}:${env.dbConnection.port}/${env.dbConnection.name}`,
   {
     useNewUrlParser: env.db.NEW_URL_PARSER,
@@ -15,4 +15,4 @@ const dbConnectio = mongoose.createConnection(
   }
 );
 
-module.exports = dbConnectio;
+module.exports = dbConnection;

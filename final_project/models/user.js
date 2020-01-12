@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const collectionName = "User";
+const Joi = require("@hapi/joi");
 
 const schema = new mongoose.Schema({
   fn: {
@@ -23,6 +24,22 @@ const schema = new mongoose.Schema({
   age: { type: Number, min: 18, max: 65, required: true }
 });
 
+const joiSchema = Joi.object({
+  firstName: Joi.string()
+    .required()
+    .min(4),
+  lastName: Joi.string()
+    .min(4)
+    .required(),
+  email: Joi.string()
+    .email()
+    .required(),
+  age: Joi.number()
+    .min(18)
+    .max(65)
+    .required()
+});
+
 //adding virtual fullname not stored in the document
 schema
   .virtual("fullName")
@@ -40,3 +57,4 @@ schema.index({ firstName: 1, lastName: 1 });
 module.exports.schema = schema;
 module.exports.Model = dbConnection =>
   dbConnection.model(collectionName, schema);
+module.exports.joiSchema = joiSchema;

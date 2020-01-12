@@ -1,7 +1,12 @@
 const mongoose = require("mongoose");
 const collectionName = "Post";
-const userSchema = require("./user").schema;
-const commentSchema = require("./comment").schema;
+const user = require("./user");
+const userSchema = user.schema;
+const userJoiSchema = user.joiSchema;
+const comment = require("./comment");
+const commentSchema = comment.schema;
+const commentJoiSchema = comment.joiSchema;
+const Joi = require("@hapi/joi");
 
 const schema = new mongoose.Schema({
   title: {
@@ -24,6 +29,25 @@ const schema = new mongoose.Schema({
   }
 });
 
+const joiSchema = Joi.object({
+  title: Joi.string()
+    .min(10)
+    .max(60)
+    .required(),
+  body: Joi.string()
+    .min(10)
+    .max(255)
+    .required(),
+  auther: userJoiSchema,
+  isPublished: Joi.boolean().default(false),
+  tags: Joi.array().items(Joi.string()),
+  comments: commentJoiSchema,
+  meta: Joi.object({
+    votes: Joi.number().default(0),
+    favs: Joi.number().default(0)
+  })
+});
+
 //adding instance method (have to use function, arrow function won't work)
 schema.methods.findAllWithSameAuther = function(callback) {
   return this.model(collectionName).find({ auther: this.auther }, callback);
@@ -37,3 +61,5 @@ schema.statics.findByAuther = function(auther) {
 module.exports.schema = schema;
 module.exports.Model = dbConnection =>
   dbConnection.model(collectionName, schema);
+
+module.exports.joiSchema = joiSchema;

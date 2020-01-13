@@ -2,57 +2,63 @@ const router = require("express").Router();
 const postRepo = require("../../repositories/post");
 
 router.get("/", async (req, res) => {
-  const posts = await postRepo.getAll();
-  return res.json(posts);
+  try {
+    const posts = await postRepo.getAll();
+    return res.json(posts);
+  } catch (err) {
+    return res.status(500).send(err.message);
+  }
 });
 
 router.get("/:id", async (req, res) => {
-  const id = req.params.id;
-  const post = await postRepo.getOneById(id);
-  if (!post) return res.sendStatus(404);
-  return res.json(post);
+  try {
+    const id = req.params.id;
+    const post = await postRepo.get(id);
+    return res.json(post);
+  } catch (err) {
+    if (err instanceof APIError) {
+      return res.status(err.status).send(err.message);
+    }
+    return res.status(500).send(err.message);
+  }
 });
 
 router.post("/", async (req, res) => {
-  const post = req.body;
-  const { error, value } = postRepo.validatePost(post);
-  if (error) return res.status(400).send(error);
   try {
-    const postDoc = await postRepo.createPost(value);
-    return res.status(201).json(postDoc);
+    const createdPost = await postRepo.create(req.body);
+    return res.status(201).json(createdPost);
   } catch (err) {
-    return res.status(500).send(err);
+    if (err instanceof APIError) {
+      return res.status(err.status).send(err.message);
+    }
+    return res.status(500).send(err.message);
   }
 });
 
 router.put("/:id", async (req, res) => {
-  const post = req.body;
-  const id = req.params.id;
   try {
-    await postRepo.getOneById(id);
-    if (!post) return res.sendStatus(404);
-  } catch (error) {
-    return res.status(500).send(err);
-  }
-  const { error, value } = postRepo.validatePost(post);
-  if (error) return res.status(400).send(error);
-  try {
-    const postDoc = await postRepo.updatePostById(id, value);
-    return res.status(200).json(postDoc);
+    const post = req.body;
+    const id = req.params.id;
+    const updatedPost = await postRepo.update(id, post);
+    return res.json(updatedPost);
   } catch (err) {
-    return res.status(500).send(err);
+    if (err instanceof APIError) {
+      return res.status(err.status).send(err.message);
+    }
+    return res.status(500).send(err.message);
   }
 });
 
 router.delete("/:id", async (req, res) => {
-  const id = req.params.id;
   try {
-    const post = await postRepo.getOneById(id);
-    if (!post) return res.sendStatus(404);
-    const postDoc = await postRepo.deletePostById(id);
-    return res.status(200).json(postDoc);
+    const id = req.params.id;
+    const deletedPost = await postRepo.delete(id);
+    return res.json(deletedPost);
   } catch (err) {
-    return res.status(500).send(err);
+    if (err instanceof APIError) {
+      return res.status(err.status).send(err.message);
+    }
+    return res.status(500).send(err.message);
   }
 });
 

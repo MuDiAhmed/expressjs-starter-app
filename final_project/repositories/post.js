@@ -2,47 +2,54 @@ const dbConnectio = require("../db");
 const posts = require("../models/post");
 const postsModel = posts.Model(dbConnectio);
 const postsJoiSchema = posts.joiSchema;
+const userRepo = require("./user");
+const commentRepo = require("./comment");
 
-const createPost = post => {
-  const postDoc = new postsModel(post);
-  return postDoc.save();
+const create = async post => {
+  const user = await userRepo.getById(post.auther);
+  const { error } = validate(post);
+  if (error) throw new APIError(400, error);
+  return new postsModel(post).save();
 };
 
-const updatePostById = (id, post = null) => {
-  return postsModel.findByIdAndUpdate(id, post, {
+const update = async (id, post) => {
+  const { error } = validate(post);
+  if (error) throw new APIError(400, error);
+  const user = await userRepo.getById(post.auther);
+  const updatedPost = await postsModel.findByIdAndUpdate(id, post, {
     useFindAndModify: false,
     new: true
   });
+  if (!updatedPost) throw new APIError(404, "Not Found");
+  return updatedPost;
 };
 
 const getAll = () => {
   return postsModel.find();
 };
 
-const getOneById = id => {
-  return postsModel.findById(id);
+const get = async id => {
+  const foundPost = await postsModel.findById(id);
+  if (!foundPost) throw new APIError(404, "Not Found");
+  return foundPost;
 };
 
-const getPostModel = () => {
-  return postsModel;
+const deletePost = async id => {
+  const deletedPost = await postsModel.findByIdAndDelete(id, {
+    useFindAndModify: false
+  });
+  if (!deletedPost) throw new APIError(404, "Not Found");
+  return deletedPost;
 };
 
-const validatePost = post => {
+const validate = post => {
   return postsJoiSchema.validate(post);
 };
 
-const deletePostById = id => {
-  return postsModel.findByIdAndRemove(id, {
-    useFindAndModify: false
-  });
-};
-
 module.exports = {
-  createPost,
-  updatePostById,
-  getPostModel,
+  create,
+  update,
   getAll,
-  getOneById,
-  validatePost,
-  deletePostById
+  get,
+  delete: deletePost
 };

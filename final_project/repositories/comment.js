@@ -15,9 +15,7 @@ const create = async comment => {
 };
 
 const update = async (id, comment) => {
-  if (comment.commenter) {
-    const user = await userRepo.getById(comment.commenter);
-  }
+  const user = await userRepo.getById(comment.commenter);
   const { error } = validate(comment);
   if (error) throw new APIError(400, error);
   return commentsModel.findByIdAndUpdate(id, comment, {

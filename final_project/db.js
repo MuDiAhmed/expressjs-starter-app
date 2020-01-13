@@ -11,7 +11,8 @@ const dbConnection = mongoose.createConnection(
     useCreateIndex: env.dbMongooseConfig.CREATE_INDEX,
     bufferCommands: env.dbMongooseConfig.BUFFER_COMMANDS,
     autoIndex: env.dbMongooseConfig.AUTO_INDEX,
-    autoCreate: env.dbMongooseConfig.AUTO_CREATE
+    autoCreate: env.dbMongooseConfig.AUTO_CREATE,
+    keepAlive: env.dbMongooseConfig.KEEP_ALIVE
   }
 );
 

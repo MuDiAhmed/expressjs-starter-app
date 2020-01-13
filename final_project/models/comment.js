@@ -24,3 +24,4 @@ module.exports.schema = schema;
 module.exports.Model = dbConnection =>
   dbConnection.model(collectionName, schema);
 module.exports.joiSchema = joiSchema;
+module.exports.collectionName = collectionName;

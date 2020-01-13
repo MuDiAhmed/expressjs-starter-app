@@ -5,6 +5,7 @@ const controllers = require("./routes/controllers");
 const middlewares = require("./middlewares");
 const env = require("./env");
 const reactEngine = require("express-react-views");
+require("./models");
 
 env.setAppEnv(app);
 app.set("views", __dirname + "/views");

@@ -1,14 +1,15 @@
 const mongoose = require("mongoose");
+const mongooseSchema = mongoose.Schema;
 const collectionName = "Post";
 const user = require("./user");
-const userSchema = user.schema;
+const userCollectionName = user.collectionName;
 const userJoiSchema = user.joiSchema;
 const comment = require("./comment");
-const commentSchema = comment.schema;
+const commentCollectionName = comment.collectionName;
 const commentJoiSchema = comment.joiSchema;
 const Joi = require("@hapi/joi");
 
-const schema = new mongoose.Schema({
+const schema = new mongooseSchema({
   title: {
     type: String,
     required: [true, "Title is required"],
@@ -17,12 +18,18 @@ const schema = new mongoose.Schema({
     unique: true //is Not a Validator, It's a convenient helper for building MongoDB unique indexes.
   },
   body: { type: String, required: true, minlength: 10, maxlength: 255 },
-  auther: { type: userSchema, required: true },
+  auther: {
+    type: mongooseSchema.Types.ObjectId,
+    ref: userCollectionName,
+    required: true
+  },
   isPublished: { type: Boolean, default: false },
   createDate: { type: Date, default: Date.now },
   updateDate: { type: Date, default: Date.now },
   tags: [String],
-  comments: [commentSchema],
+  comments: [
+    { type: mongooseSchema.Types.ObjectId, ref: commentCollectionName }
+  ],
   meta: {
     votes: { type: Number, default: 0 },
     favs: { type: Number, default: 0 }
@@ -38,10 +45,10 @@ const joiSchema = Joi.object({
     .min(10)
     .max(255)
     .required(),
-  auther: userJoiSchema,
+  auther: Joi.string().required(),
   isPublished: Joi.boolean().default(false),
   tags: Joi.array().items(Joi.string()),
-  comments: commentJoiSchema,
+  comments: Joi.string(),
   meta: Joi.object({
     votes: Joi.number().default(0),
     favs: Joi.number().default(0)
@@ -58,8 +65,20 @@ schema.statics.findByAuther = function(auther) {
   return this.find({ auther });
 };
 
+schema.pre(
+  [
+    "findOneAndRemove",
+    "findOneAndDelete",
+    "findOneAndUpdate",
+    "find",
+    "findOne"
+  ],
+  function() {
+    this.populate("auther");
+  }
+);
+
 module.exports.schema = schema;
 module.exports.Model = dbConnection =>
   dbConnection.model(collectionName, schema);
-
 module.exports.joiSchema = joiSchema;

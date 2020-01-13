@@ -15,7 +15,8 @@
     "NEW_URL_PARSER": true,
     "UNIFIED_TOPOLOGY": true,
     "CREATE_INDEX": true,
-    "BUFFER_COMMANDS": true
+    "BUFFER_COMMANDS": true,
+    "KEEP_ALIVE": true
   },
   "DB_CONNECTION": {
     "HOST": "localhost",

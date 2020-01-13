@@ -18,7 +18,8 @@ const env = {
     name: config.has("ENV_DB_NAME")
       ? config.get("ENV_DB_NAME")
       : dbConnection.NAME
-  }
+  },
+  models: config.get("MODELS")
 };
 
 const getEnv = () => {

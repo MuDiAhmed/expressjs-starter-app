@@ -1,11 +1,10 @@
 const mongoose = require("mongoose");
-const mongooseSchema = mongoose.Schema;
-const collectionName = "Post";
-const user = require("./user");
-const userCollectionName = user.collectionName;
-const comment = require("./comment");
-const commentCollectionName = comment.collectionName;
 const Joi = require("@hapi/joi");
+const { models } = require("../env").getEnv();
+const mongooseSchema = mongoose.Schema;
+const collectionName = models.POSTS;
+const userCollectionName = models.USERS;
+const commentCollectionName = models.COMMENTS;
 
 const schema = new mongooseSchema({
   title: {
@@ -22,8 +21,8 @@ const schema = new mongooseSchema({
     required: true
   },
   isPublished: { type: Boolean, default: false },
-  createDate: { type: Date, default: Date.now },
-  updateDate: { type: Date, default: Date.now },
+  createAt: { type: Date, default: Date.now },
+  updateAt: { type: Date, default: Date.now },
   tags: [String],
   comments: [
     { type: mongooseSchema.Types.ObjectId, ref: commentCollectionName }
@@ -80,4 +79,3 @@ module.exports.schema = schema;
 module.exports.Model = dbConnection =>
   dbConnection.model(collectionName, schema);
 module.exports.joiSchema = joiSchema;
-module.exports.collectionName = collectionName;

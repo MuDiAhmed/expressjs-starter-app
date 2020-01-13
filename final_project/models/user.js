@@ -1,8 +1,10 @@
 const mongoose = require("mongoose");
-const collectionName = "User";
 const Joi = require("@hapi/joi");
+const { models } = require("../env").getEnv();
+const mongooseSchema = mongoose.Schema;
+const collectionName = models.USERS;
 
-const schema = new mongoose.Schema({
+const schema = new mongooseSchema({
   fn: {
     type: String,
     alias: "firstName",
@@ -21,7 +23,9 @@ const schema = new mongoose.Schema({
     unique: true,
     match: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   },
-  age: { type: Number, min: 18, max: 65, required: true }
+  age: { type: Number, min: 18, max: 65, required: true },
+  createAt: { type: Date, default: Date.now },
+  updateAt: { type: Date, default: Date.now }
 });
 
 const joiSchema = Joi.object({
@@ -58,4 +62,3 @@ module.exports.schema = schema;
 module.exports.Model = dbConnection =>
   dbConnection.model(collectionName, schema);
 module.exports.joiSchema = joiSchema;
-module.exports.collectionName = collectionName;

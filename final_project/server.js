@@ -6,6 +6,7 @@ const middlewares = require("./middlewares");
 const env = require("./env");
 const reactEngine = require("express-react-views");
 require("./models");
+require("./globals");
 
 env.setAppEnv(app);
 app.set("views", __dirname + "/views");

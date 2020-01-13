@@ -22,5 +22,10 @@
     "HOST": "localhost",
     "PORT": "27017",
     "NAME": "mosh_udemy"
+  },
+  "MODELS": {
+    "POSTS": "Post",
+    "COMMENTS": "Comment",
+    "USERS": "User"
   }
 }

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const env = require("./env").getEnv();
 let dbConnection = creatConnection();
-mongoose.plugin(require("./plugins/updatedDate"));
+mongoose.plugin(require("./plugins/updatedAt"));
 
 function creatConnection() {
   const connection = mongoose.createConnection(

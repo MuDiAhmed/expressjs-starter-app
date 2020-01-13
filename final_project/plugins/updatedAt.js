@@ -3,8 +3,8 @@ function updateDate(schema, options) {
     ["findOneAndUpdate", "update", "updateOne", "updateMany"],
     { query: true, document: false },
     function() {
-      if (!schema.paths.updateDate) return;
-      this.set({ updateDate: Date.now() });
+      if (!schema.paths.updateAt) return;
+      this.set({ updateAt: Date.now() });
     }
   );
 }

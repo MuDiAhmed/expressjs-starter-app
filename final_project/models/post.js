@@ -3,10 +3,8 @@ const mongooseSchema = mongoose.Schema;
 const collectionName = "Post";
 const user = require("./user");
 const userCollectionName = user.collectionName;
-const userJoiSchema = user.joiSchema;
 const comment = require("./comment");
 const commentCollectionName = comment.collectionName;
-const commentJoiSchema = comment.joiSchema;
 const Joi = require("@hapi/joi");
 
 const schema = new mongooseSchema({
@@ -82,3 +80,4 @@ module.exports.schema = schema;
 module.exports.Model = dbConnection =>
   dbConnection.model(collectionName, schema);
 module.exports.joiSchema = joiSchema;
+module.exports.collectionName = collectionName;

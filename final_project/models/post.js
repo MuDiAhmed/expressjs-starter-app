@@ -71,7 +71,7 @@ schema.pre(
     "findOne"
   ],
   function() {
-    this.populate("auther");
+    this.populate("auther").populate("comments");
   }
 );
 

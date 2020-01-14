@@ -2,6 +2,7 @@ const dbConnection = require("../db");
 const { Model, joiSchema } = require("../models/comment");
 const commentsModel = Model(dbConnection);
 const userRepo = require("./user");
+const postRepo = require("./post");
 
 const getAll = () => {
   return commentsModel.find();
@@ -11,7 +12,12 @@ const create = async comment => {
   const user = await userRepo.getById(comment.commenter);
   const { error } = validate(comment);
   if (error) throw new APIError(400, error);
-  return new commentsModel(comment).save();
+  const createdComment = new commentsModel(comment);
+  await updateCommentAttachedModel(
+    createdComment.commentedOn,
+    createdComment.id
+  );
+  return createdComment.save();
 };
 
 const update = async (id, comment) => {
@@ -40,6 +46,10 @@ const get = async id => {
 
 const validate = comment => {
   return joiSchema.validate(comment);
+};
+
+const updateCommentAttachedModel = (postId, commentId) => {
+  return postRepo.pushToPostComments(postId, commentId);
 };
 
 module.exports = {

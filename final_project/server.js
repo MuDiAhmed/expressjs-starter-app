@@ -1,7 +1,6 @@
 const express = require("express");
 const app = express();
-const api = require("./routes/api");
-const controllers = require("./routes/controllers");
+const routes = require("./routes");
 const middlewares = require("./middlewares");
 const env = require("./env");
 const reactEngine = require("express-react-views");
@@ -13,7 +12,6 @@ app.set("views", __dirname + "/views");
 app.set("view engine", "jsx");
 app.engine("jsx", reactEngine.createEngine());
 app.use(middlewares);
-app.use(api);
-app.use(controllers);
+app.use(routes);
 
 module.exports = app;

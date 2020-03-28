@@ -1,5 +1,14 @@
 {
   "PORT": 4000,
+  "VIEW": {
+    "DIR": "views",
+    "ENGINE": "pug"
+  },
+  "API_DOCS": {
+    "DIR": "apidoc",
+    "URL": "/apidoc"
+  },
+  "STATIC_DIR": "public",
   "APP_DEBUG": {
     "SERVER": "APP:SERVER",
     "API": "APP:API"

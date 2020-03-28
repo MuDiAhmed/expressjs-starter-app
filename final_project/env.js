@@ -19,7 +19,13 @@ const env = {
       ? config.get("ENV_DB_NAME")
       : dbConnection.NAME
   },
-  models: config.get("MODELS")
+  static_dir: config.get("STATIC_DIR"),
+  models: config.get("MODELS"),
+  view: config.get("VIEW"),
+  api_doc_url: config.get("API_DOCS.URL"),
+  api_doc_dir: config.has("API_DOC_DIR")
+    ? config.get("API_DOC_DIR")
+    : config.get("API_DOCS.DIR")
 };
 
 const getEnv = () => {

@@ -1,5 +1,5 @@
 const db = require("./db");
-const app = require("./server");
+const app = require("./bootstrap");
 const env = require("./env").getEnv();
 const debug = require("debug")(env.server_debug);
 

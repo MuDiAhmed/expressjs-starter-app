@@ -1,0 +1,27 @@
+{
+  "name": "mosh_udemy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev_final": "PORT=4300 DEBUG=APP:*,express:* nodemon final_project",
+    "start": "npm run dev_final"
+  },
+  "author": "Mohamed Youssef",
+  "license": "ISC",
+  "dependencies": {
+    "@hapi/joi": "^16.1.8",
+    "config": "^3.2.4",
+    "debug": "^4.1.1",
+    "express": "^4.17.1",
+    "helmet": "^3.21.2",
+    "lodash": "^4.17.15",
+    "mongoose": "^5.8.6",
+    "morgan": "^1.9.1",
+    "nodemon": "^2.0.2",
+    "pug": "^2.0.4",
+    "rotating-file-stream": "^2.0.1",
+    "apidoc": "^0.20.1"
+  }
+}

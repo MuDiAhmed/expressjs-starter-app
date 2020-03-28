@@ -9,8 +9,8 @@ require("./globals");
 
 env.setAppEnv(app);
 app.set("views", __dirname + "/views");
-app.set("view engine", "jsx");
-app.engine("jsx", reactEngine.createEngine());
+app.engine("html", require("pug").renderFile);
+app.set("view engine", "pub");
 app.use(middlewares);
 app.use(routes);
 

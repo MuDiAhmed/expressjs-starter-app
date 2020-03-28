@@ -1,0 +1,10 @@
+{
+  "uid": "production",
+  "append": true,
+  "watch": false,
+  "script": "index.js",
+  "sourceDir": "./",
+  "logFile": "./forever.log",
+  "outFile": "./log/forever/forever-out.log",
+  "errFile": "./log/forever/forever-error.log"
+}

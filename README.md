@@ -1,8 +1,4 @@
-# Blog Site
-
-## **Description:**
-
-See some new posts daily
+# Express Starter App
 
 ## **Prerequisites:**
 
@@ -12,12 +8,8 @@ For production:
 
 For local:
 
-- Nodejs
-
-## **Documentations:**
-
-- Run `./node_modules/.bin/apidoc -i routes/ -o public/`
+- Node:8+
 
 ## **Installation:**
 
-- Run `npm start`
+- Run `docker-compose up --build`

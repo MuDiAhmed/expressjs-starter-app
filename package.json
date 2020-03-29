@@ -5,13 +5,14 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev_final": "PORT=4300 DEBUG=APP:*,express:* nodemon final_project",
-    "start": "npm run dev_final"
+    "dev": "DEBUG=APP:*,express:* ./node_modules/.bin/pm2-dev start index.js",
+    "start": "npm run dev"
   },
   "author": "Mohamed Youssef",
   "license": "ISC",
   "dependencies": {
     "@hapi/joi": "^16.1.8",
+    "apidoc": "^0.20.1",
     "config": "^3.2.4",
     "debug": "^4.1.1",
     "express": "^4.17.1",
@@ -19,9 +20,8 @@
     "lodash": "^4.17.15",
     "mongoose": "^5.8.6",
     "morgan": "^1.9.1",
-    "nodemon": "^2.0.2",
+    "pm2": "^4.2.3",
     "pug": "^2.0.4",
-    "rotating-file-stream": "^2.0.1",
-    "apidoc": "^0.20.1"
+    "rotating-file-stream": "^2.0.1"
   }
 }
